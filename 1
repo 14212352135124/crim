@@ -1,6 +1,3 @@
-
-
-
 local Config = {
     WindowName = "🚶🏻‍♂️Elite",
 	Color = Color3.fromRGB(65, 0, 255),
@@ -10,88 +7,286 @@ local Config = {
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/AlexR32/Roblox/main/BracketV3.lua"))()
 local Window = Library:CreateWindow(Config, game:GetService("CoreGui"))
 
-local Tab1 = Window:CreateTab("Pistol 1v1")
+local Tab1 = Window:CreateTab("Criminality")
+local Tab2 = Window:CreateTab("Teleportations")
 local Tab3 = Window:CreateTab("UI Settings")
 
 local Section1 = Tab1:CreateSection("Combat")
 local Section2 = Tab1:CreateSection("Visuals")
 local Section3 = Tab3:CreateSection("Menu")
 local Section4 = Tab3:CreateSection("Background")
-local Section6 = Tab1:CreateSection("Character") 
-local Section7 = Tab1:CreateSection("Misc") 
+local Section5 = Tab2:CreateSection("Areas")
+local Section6 = Tab1:CreateSection("Character")
+local Section7 = Tab1:CreateSection("Misc")
+local Section8 = Tab2:CreateSection("Robbing")
 
-
-
-
-
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Elite"; -- title of notification
-    Text = "Welcome to Elite"; -- bottom text
+-->> Start Notification -->> Thx Mr Birdz
+function Notify(msg)
+    local l__ReplicatedStorage__1 = game:GetService("ReplicatedStorage");
+    l__ReplicatedStorage__1.Events2.Notification:Fire({
+        Title = "Elite", 
+        Text = tostring(msg), 
+        Duration = 5
+    }, "lost");
+    end
     
-    Duration = 7; -- how long notification is on screen
-    })
-    
+    Notify("discord.gg/elitee")
+-->> End Noti
 
 
 
 
 
+
+-->> Important
+game:GetService("RunService").RenderStepped:Connect(function()
+    for _, Connection in next, getconnections(game:GetService("ScriptContext").Error) do
+        Connection:Disable()
+    end
+
+    for _, Connection in next, getconnections(game:GetService("LogService").MessageOut) do
+        Connection:Disable()
+    end
+end)
+
+
+local function CheckTable(tbl, ...)
+    local Indexes = {...}
+
+    for _, v in ipairs(Indexes) do
+        if not (rawget(tbl, v)) then
+            return false
+        end
+    end
+
+    return true
+end
+
+local u21
+for _,v in ipairs(getgc(true)) do
+    if (typeof(v) == "table" and CheckTable(v, "A", "B", "GP", "EN")) then
+        u21 = v
+        break
+    end
+end
+
+hookfunction(u21.A, function()
+
+end)
+hookfunction(u21.B, function()
+
+end)
+-->> End Important
+
+
+
+
+
+-->> Settings
+local Settings                          = { GunMods = { NoRecoil = true, InstantEquip = true, Spread = true, AutoMode = false, SpreadAmount = 0 }, DownedChat = false, KillChat = false, DownedMSG = "IM A FEMALE", KillMSG = "", IsDead = false, AutoPickCash = false, AutoPickTools = false, AutoPickScrap = false, InfiniteStamina = false, NoJumpCooldown = false, SpaceJump = false, NoFailLockpick = false, ShowChatLogs = true, NoFlashbang  = false, NoSmoke = false, UnlockDoorsNearby = false, OpenDoorsNearby = false, NoClip = false, FullBright = false, CamFovToggled = false, CamFov = 70, Zoom = 10, InfinitePepperSpray = false, PepperSprayAura = false, WalkSpeed = {Enabled = false, Amount = 30}, JumpPower = {Enabled = false, Amount = 75}, NoBarbwire = false, NoFallDamage = false, NoRagdoll = false, WatermarkOn = false, ViewModel = { Enabled = true, Viewmodel = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Melees = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.ForceField }, Guns = { Color = Color3.fromRGB(255, 255, 255), Material = Enum.Material.Plastic }, LeftArmOff = false }, CustomHitSound = 5043539486, VolumeHitsound = 1, WallBang = false, ElevatorTP = false, TowerTP = false, UIKey = Enum.KeyCode.LeftAlt};
 local ESPSettings                       = { PlayerESP = { Enabled = false, TracersOn = false, BoxesOn = false, NamesOn = false, DistanceOn = false, HealthOn = false, ToolOn = false, FaceCamOn = false, Distance = 2000 }, ScrapESP = { Enabled = false, Distance = 2000, LegendaryOnly = true, RareOnly = true, GoodOnly = true, BadOnly = true }, SafeESP = { Enabled = false, Distance = 2000, BigOnly = true, SmallOnly = true }, RegisterESP = { Enabled = false, Distance = 2000 }, ESPColor = Color3.fromRGB(255, 255, 255), ToolColor = Color3.fromRGB(255, 255, 255)};
 local ESPFramework                      = loadstring(game:HttpGet("https://raw.githubusercontent.com/NougatBitz/Femware-Leak/main/ESP.lua", true))()
+                                          loadstring(game:HttpGet("https://raw.githubusercontent.com/NougatBitz/BitzUtils/main/CriminalityFeatures.lua"))()
+local CoolDowns                         = { AutoPickUps = { MoneyCooldown = false, ScrapCooldown = false, ToolCooldown = false } }
+game:GetService("RunService").RenderStepped:Connect(function()
 
--->> Ui settings
-local Toggle3 = Section3:CreateToggle("UI Toggle", nil, function(State)
-	Window:Toggle(State)
+if Settings.UnlockDoorsNearby == true then
+    if Settings.IsDead == false then
+        for i, v in pairs(game:GetService("Workspace").Map.Doors:GetChildren()) do
+            if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v:FindFirstChild("DoorBase").Position).Magnitude <= 5 then
+                if v:FindFirstChild("Values"):FindFirstChild("Locked").Value == true then
+                    v:FindFirstChild("Events"):FindFirstChild("Toggle"):FireServer("Unlock", v.Lock)
+                end
+            end
+        end
+    end
+end
+
+if Settings.OpenDoorsNearby == true then
+    if Settings.IsDead == false then
+        for i, v in pairs(game:GetService("Workspace").Map.Doors:GetChildren()) do
+            if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v:FindFirstChild("DoorBase").Position).Magnitude <= 5 then
+                if v:FindFirstChild("Values"):FindFirstChild("Open").Value == false then
+                    v:FindFirstChild("Events"):FindFirstChild("Toggle"):FireServer("Open", v.Knob2)
+                end
+            end
+        end
+    end
+end
 end)
-Toggle3:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
-	Config.Keybind = Enum.KeyCode[Key]
+
+-->> End settings
+
+-->> AutoPickup
+coroutine.wrap(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+
+        if Settings.CamFovToggled == true then
+            game.Workspace.Camera.FieldOfView = Settings.CamFov
+        end
+
+        if Settings.AutoPickScrap == true then
+            for i, v in pairs(game:GetService("Workspace").Filter.SpawnedPiles:GetChildren()) do
+                if Settings.IsDead == false then
+                    if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v:FindFirstChild("MeshPart").Position).Magnitude < 5 then
+                        if CoolDowns.AutoPickUps.ScrapCooldown == false then
+                            CoolDowns.AutoPickUps.ScrapCooldown = true
+                            game:GetService("ReplicatedStorage").Events.PIC_PU:FireServer(string.reverse(v:GetAttribute("zp")))
+
+                            wait(1)
+
+                            CoolDowns.AutoPickUps.ScrapCooldown = false
+                        end
+                    end
+                end 
+            end
+        end
+    end)
+end)()
+
+coroutine.wrap(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if Settings.AutoPickTools == true then
+            for i, v in pairs(game:GetService("Workspace").Filter.SpawnedTools:GetChildren()) do
+                if Settings.IsDead == false then
+                    if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v:FindFirstChildWhichIsA("MeshPart").Position).Magnitude < 5 then
+                        if CoolDowns.AutoPickUps.ToolCooldown == false then
+                            CoolDowns.AutoPickUps.ToolCooldown = true
+                            game:GetService("ReplicatedStorage").Events.PIC_TLO:FireServer(v:FindFirstChildWhichIsA("MeshPart"))
+
+                            wait(1)
+
+                            CoolDowns.AutoPickUps.ToolCooldown = false
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)()
+
+coroutine.wrap(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if Settings.AutoPickCash == true then
+            for i, v in pairs(game:GetService("Workspace").Filter.SpawnedBread:GetChildren()) do
+                if Settings.IsDead == false then
+                    if (game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Position - v.Position).Magnitude < 5 then
+                        if CoolDowns.AutoPickUps.MoneyCooldown == false then
+                            CoolDowns.AutoPickUps.MoneyCooldown = true
+                            game:GetService("ReplicatedStorage").Events.CZDPZUS:FireServer(v)
+
+                            wait(1)
+
+                            CoolDowns.AutoPickUps.MoneyCooldown = false
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)()
+-->> End auto pickup
+
+-->> Guns
+function GunModules()
+    for i,v in pairs(getgc(true)) do 
+        if type(v) == 'table' and rawget(v, 'EquipTime') then 
+            if Settings.GunMods.NoRecoil == true then
+                coroutine.resume(coroutine.create(function()
+                    v.Recoil = 0
+                    v.CameraRecoilingEnabled = false
+                    v.AngleX_Min = 0 
+                    v.AngleX_Max = 0 
+                    v.AngleY_Min = 0
+                    v.AngleY_Max = 0
+                    v.AngleZ_Min = 0
+                    v.AngleZ_Max = 0
+                end))
+            end
+            if Settings.GunMods.InstantEquip == true then
+                coroutine.resume(coroutine.create(function()
+                    v.EquipTime = 0
+                    v.EquipAnimSpeed = 10000000000
+                end))
+            end
+            if Settings.GunMods.InstantAim == true then
+                coroutine.resume(coroutine.create(function()
+                    v.AimSettings.AimSpeed = 0
+                end))
+                coroutine.resume(coroutine.create(function()
+                    v.SniperSettings.AimSpeed = 0
+                    v.SniperSettings.AimAnimSpeed = 10000000000
+                end))
+            end
+        end
+    end
+end
+-->> end Guns
+
+
+
+-->> Anti stuff
+local MT = getrawmetatable(game)
+		setreadonly(MT, false)
+		local NameCall = MT.__namecall
+
+		MT.__namecall = newcclosure(function(self, ...)
+			local Method = getnamecallmethod()
+			local Args = {...}
+
+			if Method == "FireServer" and Args[1] == "BHHh" then
+				if Settings.NoBarbwire == true then
+					return wait(9e9)
+				end
+			elseif Method == "FireServer" and Args[1] == "FlllD" or Args[1] == "FlllH" then
+				if Settings.NoFallDamage == true then
+					return wait(9e9)
+				end
+			elseif Method == "FireServer" and Args[1] == "__--r" or Args[1] == "HITRGP" then
+				if Settings.NoRagdoll == true then
+					return wait(9e9)
+				end
+			elseif Method == "FireServer" and Args[1] == "FllH" then
+				if Settings.NoDowned == true then
+					return wait(9e9)
+				end
+			end
+
+			return NameCall(self, ...)
+		end)
+-->> End anti stuff
+
+
+
+-->> Noclip Bypass
+local statetype = Enum.HumanoidStateType
+local rnd = Random.new():NextInteger(150, 100000)
+local mt = getrawmetatable(statetype)
+local mt_index = mt.__index
+setreadonly(mt, false)
+
+mt.__index = newcclosure(function(t, k)
+if not checkcaller() and t == statetype and k == "StrafingNoPhysics"  then
+    return rnd
+end
+
+return mt_index(t, k)
 end)
-Toggle3:SetState(true)
 
-local Colorpicker3 = Section3:CreateColorpicker("UI Color", function(Color)
-	Window:ChangeColor(Color)
-end)
-Colorpicker3:UpdateColor(Config.Color)
+setreadonly(mt, true)
 
--- credits to jan for patterns
-local Dropdown3 = Section4:CreateDropdown("Image", {"Default","Hearts","Abstract","Hexagon","Circles","Lace With Flowers","Floral"}, function(Name)
-	if Name == "Default" then
-		Window:SetBackground("2151741365")
-	elseif Name == "Hearts" then
-		Window:SetBackground("6073763717")
-	elseif Name == "Abstract" then
-		Window:SetBackground("6073743871")
-	elseif Name == "Hexagon" then
-		Window:SetBackground("6073628839")
-	elseif Name == "Circles" then
-		Window:SetBackground("6071579801")
-	elseif Name == "Lace With Flowers" then
-		Window:SetBackground("6071575925")
-	elseif Name == "Floral" then
-		Window:SetBackground("5553946656")
-	end
-end)
-Dropdown3:SetOption("Default")
+		game:GetService("RunService").RenderStepped:Connect(function()
+			for _, Connection in next, getconnections(game:GetService("ScriptContext").Error) do
+				Connection:Disable()
+			end
 
-local Colorpicker4 = Section4:CreateColorpicker("Color", function(Color)
-	Window:SetBackgroundColor(Color)
-end)
-Colorpicker4:UpdateColor(Color3.new(1,1,1))
+			for _, Connection in next, getconnections(game:GetService("LogService").MessageOut) do
+				Connection:Disable()
+			end
+		end)
+-->> End Important
 
-local Slider3 = Section4:CreateSlider("Transparency",0,1,nil,false, function(Value)
-	Window:SetBackgroundTransparency(Value)
-end)
-Slider3:SetValue(0)
-
-local Slider4 = Section4:CreateSlider("Tile Scale",0,1,nil,false, function(Value)
-	Window:SetTileScale(Value)
-end)
-Slider4:SetValue(0.5)
--->> end ui settings
-
-
-
-Section1:CreateLabel("Silent Aim")
+-->> Silent Aim [Section 1 - Tab 1]
 local Camera = workspace.CurrentCamera
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -241,7 +436,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end)
 end))
 
-
+local SilentAimLabel = Section1:CreateLabel("Silent Aim")
 
 local SaylintTogle = Section1:CreateToggle("Enabled", nil, function(State)
     SilentSettings.Main.Enabled = State
@@ -260,213 +455,312 @@ end)
 local Colorpicker1 = Section1:CreateColorpicker("Fov Color", function(V)
 	fov_circle.Color = V
 end)
+-->> End Silent Aim
 
 
-Section6:CreateLabel("Local Player")
-local Slider1 = Section6:CreateSlider("Walk Speed", 0,150,16,true, function(v)
-	_G.WalkSpeed = v
+-->> Gun Mods
+local SilentAimLabel = Section1:CreateLabel("Gun Mods")
+
+local Toggle1 = Section1:CreateToggle("No Recoil", nil, function(State)
+    if State == true then
+    ToggleBitzFeature("NoRecoil", true)
+end
+    if State == false then
+    ToggleBitzFeature("NoRecoil", false)
+end
 end)
 
-local Toggle111 = Section6:CreateToggle("Toggle WS", nil, function(State)
+local Toggle2 = Section1:CreateToggle("No Spread", nil, function(State)
     if State == true then
-        getgenv().WalkSpeedValue = _G.WalkSpeed; --set your desired walkspeed here
-        local Player = game:service'Players'.LocalPlayer;
-        Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
-        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
-        end)
-        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
-        end 
-        if State == false then
-        getgenv().WalkSpeedValue = 16; --set your desired walkspeed here
-        local Player = game:service'Players'.LocalPlayer;
-        Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
-        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
-        end)
-        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+        ToggleBitzFeature("NoSpread", true)
+end
+    if State == false then
+        ToggleBitzFeature("NoSpread", false)
+end
+end)
+
+
+local Toggle2 = Section1:CreateToggle("Instant Equip", Settings.GunMods.InstantEquip, function(V)
+    Settings.GunMods.InstantEquip = V
+end)
+
+
+
+
+
+local Toggle2 = Section1:CreateToggle("Wallbang", nil, function(State)
+game:service[[Workspace]]:FindFirstChild('Map'):FindFirstChild('Parts'):FindFirstChild('M_Parts').Parent = game:service[[Workspace]]:FindFirstChild('Characters')
+end)
+-->> end gun mod
+
+-->> Combat Misc
+
+
+
+
+local SilentAimLabel = Section1:CreateLabel("Misc")
+local Toggle2 = Section1:CreateToggle("Kill Aura", nil, function(State)
+
+    local Clients = game.Players
+    local Client = Clients.LocalPlayer
+    
+    local ClientFunctions = {}
+    local GameFunctions = {}
+    local Replicated = game:GetService("ReplicatedStorage")
+    
+    getgenv().Settings = {Killaura = true}
+    
+    function Hit(Target, debounce)
+    
+        local ohString1 = "\240\159\154\168"
+        local ohNumber2 = tick()
+        local ohInstance3 = Client.Character:FindFirstChildOfClass("Tool")
+        local ohString4 = "43TRFWJ"
+        local ohString5 = "Normal"
+        local ohNumber6 = tick() - 0
+        local ohBoolean7 = true
+    
+        local return_value = game:GetService("ReplicatedStorage").Events["XMHH.1"]:InvokeServer(ohString1, ohNumber2, ohInstance3, ohString4, ohString5, ohNumber6, ohBoolean7)
+    
+        wait(debounce)
+    
+        local ohString1 = "\240\159\154\168"
+        local ohNumber2 = tick()
+        local ohInstance3 = Client.Character:FindFirstChildOfClass("Tool")
+        local ohString4 = "2389ZFX33"
+        local ohNumber5 = return_value
+        local ohBoolean6 = false
+        local ohInstance7 = Client.Character["Left Arm"]
+        local ohInstance8 = Target["Left Arm"]
+        local ohInstance9 = Target
+        local ohVector310 = Client.Character["Left Arm"].Position
+        local ohVector311 = Target["Head"].Position
+    
+        for i=1, 4 do
+    
+        game:GetService("ReplicatedStorage").Events["XMHH2.1"]:FireServer(ohString1, ohNumber2, ohInstance3, ohString4, ohNumber5, ohBoolean6, ohInstance7, ohInstance8, ohInstance9, ohVector310, ohVector311)
+        
+        end
     end
+    
+    task.spawn(function()
+        while wait(0.07) do
+            if Settings.Killaura then
+                pcall(function()
+                    for _,v in next, Clients:GetChildren() do
+                        if v.Character and v~=Client then
+                            if v.Character:FindFirstChildOfClass("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
+                                if v.Character.Humanoid.Health > 4 then
+    
+                                    if (v.Character.HumanoidRootPart.Position-Client.Character.HumanoidRootPart.Position).magnitude < 20 then -- to add multiple targets
+                                        Hit(v.Character, 0)
+                                    end
+    
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end
+    end)
+end)
+
+local Button1 = Section1:CreateButton("⚠️Melee Godmode", function()	
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NougatBitz/Femware-Leak/main/meleegod.lua", true))()
     end)
 
-    Toggle111:CreateKeybind("4", function(Key)
-        print(Key)
-    end)
-
--------------
-local Toggle2 = Section6:CreateToggle("Toggle JP", nil, function(State)
-    if State == true then
-        getgenv().JumpPowerValue = _G.JumpPower; --set your desired walkspeed here
-        local Player = game:service'Players'.LocalPlayer;
-        Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
-        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
+    local Button1 = Section1:CreateButton("⚠️Godmode", function()	
+        local function a(b, ...)
+            local c = {
+            ...
+            }
+            for d, e in ipairs(c) do
+            if not rawget(b, e) then
+            return false
+            end
+            end;
+            return true
+            end;
+            local f;
+            for d, e in ipairs(getgc(true)) do
+            if typeof(e) == "table" and a(e, "A", "B", "GP", "EN") then
+            f = e;
+            break
+            end
+            end;
+            hookfunction(f.A, function()
+            end)
+            hookfunction(f.B, function()
         end)
-        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
+        
+        local statetype = Enum.HumanoidStateType
+        local rnd = Random.new():NextInteger(150, 100000)
+        local mt = getrawmetatable(statetype)
+        local mt_index = mt.index
+        setreadonly(mt, false)
+        
+        mt.index = newcclosure(function(t, k)
+           if not checkcaller() and t == statetype and k == "Ragdoll" then
+               return rnd
+           end
+        
+           return mt_index(t, k)
+        end)
+        
+        setreadonly(mt, true)
+        
+        game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+            if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
+                game.Players.LocalPlayer.Character.Humanoid.Health = 10000000
+            end
+        end)
+        
+        game:GetService('RunService').Stepped:Connect(function()
+            game.Players.LocalPlayer.Character.Humanoid.Health = 0
+        end)
+        
+        for i,v in pairs(game:GetService('Workspace'):GetChildren()) do
+            if v:IsA('Camera') then
+                v:Destroy()
+            end
+        end
+        
+        local newcam = Instance.new('Camera',game.Workspace)
+        newcam.Name = 'Camera'
+        newcam.CameraType = 'Custom'
+        newcam.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        newcam.HeadLocked = true
+        newcam.HeadScale = 1
+        
+        wait(5)
+        
+        game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+        game.Players.LocalPlayer.PlayerGui.DeathGUI:Destroy()
+    end)
+-->> End combat misc
+
+-->> Visuals Aka Esp
+local ESP = loadstring(game:HttpGet("https://kiriot22.com/releases/ESP.lua"))() -->> Credits for these go to CheatX
+ESP:Toggle(true)
+ESP.Players = false 
+ESP.Tracers = false 
+ESP.Boxes = false 
+ESP.Names = false
+
+-- Med safes
+for i,v in pairs(game:GetService("Workspace").Map.BredMakurz:GetDescendants()) do
+	if string.find(v.Name,"MediumSafe") then 
+	    if v:FindFirstChild("MainPart") then 
+            ESP:Add(v.MainPart, {
+                Name = "Medium Safe",
+                IsEnabled = "mediumSafe",
+                Color = Color3.fromRGB(139, 203, 255)
+            })
         end 
-        if State == false then
-        getgenv().JumpPowerValue = 50; --set your desired walkspeed here
-        local Player = game:service'Players'.LocalPlayer;
-        Player.Character.Humanoid:GetPropertyChangedSignal'JumpPower':Connect(function()
-        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
-        end)
-        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
-    end
-    end)
+	end 
+end
 
-    local Slider1 = Section6:CreateSlider("Jump Power", 0,75,50,true, function(v)
-        _G.JumpPower = v
-    end)
+-- Small safes
+for i,v in pairs(game:GetService("Workspace").Map.BredMakurz:GetDescendants()) do
+	if string.find(v.Name,"SmallSafe") then 
+	    if v:FindFirstChild("MainPart") then 
+            ESP:Add(v.MainPart, {
+                Name = "Small Safe",
+                IsEnabled = "smallSafe",
+                Color = Color3.fromRGB(228, 236, 243)
+            })
+        end 
+	end 
+end
 
-    local Toggle6 = Section6:CreateToggle("Noclip", nil, function(v) 
-        _G.Noclip = v
-        
-        local function Noclip()
-        if game.Players.LocalPlayer.Character ~= nil and _G.Noclip == true then
-        for _, selfChar in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-            if selfChar:IsA("BasePart") and selfChar.CanCollide == true and selfChar.Name then
-                    selfChar.CanCollide = false
-                end
-            end
-        end
-        end
-        
-        game:GetService('RunService').Stepped:Connect(Noclip)
-        end)
+-- Registers
+for i,v in pairs(game:GetService("Workspace").Map.BredMakurz:GetDescendants()) do
+    if string.find(v.Name,"Register") then 
+        if v:FindFirstChild("MainPart") then 
+            ESP:Add(v.MainPart, {
+                Name = "Register",
+                IsEnabled = "registerSafe",
+                Color = Color3.fromRGB(255, 0, 128)
+            })
+        end 
+    end 
+end
 
-        Section6:CreateLabel("Fly")
-        local Toggle2 = Section6:CreateToggle("Fly (X)", nil, function(State)
-            local Flying = true
-        local Flymode = "Camera"
-        local MaxSpeed = 10 -- speed 
-        local Down = {['w'] = false, ['a'] = false, ['s'] = false, ['d'] = false, ['q'] = false, ['e'] = false}
-        local KD = game.Players.LocalPlayer:GetMouse().KeyDown
-        local KU = game.Players.LocalPlayer:GetMouse().KeyUp
-        KD:Connect(function(K)
-            if K == "w" or K == "a" or K == "s" or K == "d" or K == "q" or K == "e" then 
-                Down[K] = true 
-                print(Down[K])
-            end
-        end)
-        
-        KU:Connect(function(K)
-            if K == "w" or K == "a" or K == "s" or K == "d" or K == "q" or K == "e" then 
-                Down[K] = false 
-            elseif K == "x" then 
-                Flying = not Flying 
-                EnableFly()
-            end
-        end)
-        
-        if workspace:FindFirstChild("CenterOfGravitationalForce") then 
-            Flying = false 
-            workspace:FindFirstChild("CenterOfGravitationalForce"):Destroy()
-        end
-        
-        local Flyanimation = Instance.new('Animation', game.Workspace)
-        Flyanimation.AnimationId = 'rbxassetid://3541044388'
-        local Idleanimation = Instance.new('Animation', game.Workspace)
-        Idleanimation.AnimationId = 'rbxassetid://3541114300'
-        local HeroIdle = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Idleanimation)
-        local HeroFly = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Flyanimation)
-        
-        local Inc = 0.1
-        
-        function EnableFly()
-            local Speed = 0.5
-            local Part = Instance.new("Part")
-            Part.Parent = workspace
-            Part.Size = Vector3.new(5,5,5)
-            Part.Transparency = 1
-            Part.CanCollide = false 
-            Part.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-            Part.Anchored = true
-            Part.Name = "CenterOfGravitationalForce"
-            
-            local Att1 = Instance.new("Attachment")
-            Att1.Name = "Att1"
-            Att1.Visible = false 
-            Att1.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-            
-            local Att2 = Instance.new("Attachment")
-            Att2.Name = "Att2"
-            Att2.Visible = false 
-            Att2.Parent = Part
-            
-            local AlignPos = Instance.new("AlignPosition")
-            local AlignGyro = Instance.new("AlignOrientation")
-            
-            AlignPos.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-            AlignPos.Attachment0 = Att1
-            AlignPos.MaxForce = math.huge
-            AlignPos.MaxVelocity = math.huge
-            AlignPos.Mode = Enum.PositionAlignmentMode.TwoAttachment
-            AlignPos.Attachment1 = Att2
-            AlignPos.RigidityEnabled = false 
-            
-            AlignGyro.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-            AlignGyro.Mode = Enum.OrientationAlignmentMode.OneAttachment
-            AlignGyro.CFrame = workspace.CurrentCamera.CFrame
-            AlignGyro.MaxTorque = math.huge
-            AlignGyro.Attachment0 = Att1
-            AlignGyro.RigidityEnabled = false
-            
-            repeat wait() 
-                game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
-                if Down["w"] then 
-                    HeroFly:Play()
-                    HeroIdle:Stop()
-                    Part.CFrame = Part.CFrame + workspace.CurrentCamera.CFrame.lookVector * Speed
-                    Speed = Speed + Inc
-                end
-                if Down["s"] then 
-                    HeroFly:Play()
-                    HeroIdle:Stop()
-                    Part.CFrame = Part.CFrame - workspace.CurrentCamera.CFrame.lookVector * Speed
-                    Speed = Speed + Inc
-                end
-                if Down["q"] then 
-                    Part.CFrame = Part.CFrame * CFrame.new(0, Speed, 0)
-                end 
-                if Down["e"] then 
-                    Part.CFrame = Part.CFrame * CFrame.new(0, -Speed, 0)
-                end
-                if Speed > MaxSpeed then 
-                    Speed = MaxSpeed
-                end
-                if not Down["w"] and not Down["s"] then 
-                    HeroFly:Stop()
-                    HeroIdle:Play()
-                end
-                if Down["w"] then 
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame * CFrame.Angles(-math.rad(Speed*4), 0 ,0)
-                elseif Down["s"] then 
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame * CFrame.Angles(math.rad(Speed*4), 0 ,0)
-                elseif Down["q"] then 
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame * CFrame.Angles(math.rad(Speed*7), 0 ,0)
-                elseif Down["e"] then 
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame * CFrame.Angles(-math.rad(Speed*7), 0 ,0)
-                elseif Down["a"] then 
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame * CFrame.Angles(0, math.rad(Speed*50) ,0)
-                elseif Down["d"] then 
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame * CFrame.Angles(0, -math.rad(Speed*50) ,0)
-                else
-                    AlignGyro.CFrame = workspace.CurrentCamera.CFrame
-                end
-            until Flying == false
-            game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
-            AlignGyro:Destroy()
-            AlignPos:Destroy()
-            Part:Destroy()
-            HeroIdle:Stop()
-            HeroFly:Stop()
-        end
-        EnableFly()
-        end)
+-- ATMs 
+for i,v in pairs(game:GetService("Workspace").Map.ATMz:GetDescendants()) do
+    if string.find(v.Name,"ATM") then 
+        if v:FindFirstChild("MainPart") then 
+            ESP:Add(v.MainPart, {
+                Name = "ATM",
+                IsEnabled = "atmPart",
+                Color = Color3.fromRGB(0, 255, 42)
+            })
+        end 
+    end 
+end
+
+-- Dealers
+for i,v in pairs(game:GetService("Workspace").Map.Shopz:GetDescendants()) do
+    if string.find(v.Name,"Dealer") then 
+        if v:FindFirstChild("MainPart") then 
+            ESP:Add(v.MainPart, {
+                Name = "Dealer",
+                IsEnabled = "dealerStore",
+                Color = Color3.fromRGB(255, 189, 128)
+            })
+        end 
+    end 
+end
 
 
+-- Scraps
+ESP:AddObjectListener(game:GetService("Workspace").Filter.SpawnedPiles, {
+    Type = "Model",
+    CustomName = "Scrap",
+    Color = Color3.fromRGB(216, 255, 164),
+    IsEnabled = "scrapPart"
+})
+
+local Label1 = Section2:CreateLabel("Rob esp")
+local Toggle2 = Section2:CreateToggle("Toggle esp", false, function(Value)
+    ESP:Toggle(Value)
+end)
+
+local Toggle2 = Section2:CreateToggle("Esp Boxes", false, function(Value)
+    ESP.Boxes = Value  
+end)
 
 
+local Toggle2 = Section2:CreateToggle("Esp Nametags", false, function(Value)
+    ESP.Names = Value 
+end)
 
 
-        
-        -->> Visuals
+local Toggle2 = Section2:CreateToggle("Show Medium Safes", false, function(Value)
+    ESP.mediumSafe = Value 
+end)
+
+local Toggle2 = Section2:CreateToggle("Show Small Safes", false, function(Value)
+    ESP.smallSafe = Value 
+end)
+
+local Toggle2 = Section2:CreateToggle("Show Registers", false, function(Value)
+    ESP.registerSafe = Value 
+end)
+
+local Toggle2 = Section2:CreateToggle("Show ATMs", false, function(Value)
+    ESP.atmPart = Value 
+end)
+
+local Toggle2 = Section2:CreateToggle("Show Dealers", false, function(Value)
+    ESP.dealerStore = Value 
+end)
+
+local Toggle2 = Section2:CreateToggle("Show Scraps", false, function(Value)
+    ESP.scrapPart = Value 
+end)
+
 local Label1 = Section2:CreateLabel("Player Esps")
 local Toggle2 = Section2:CreateToggle("Toggle Esp", ESPSettings.PlayerESP.Enabled, function(V)
     ESPSettings.PlayerESP.Enabled = V
@@ -510,12 +804,355 @@ local Toggle2 = Section2:CreateToggle("Distance", ESPSettings.PlayerESP.Distance
     ESPFramework.Distance = ESPSettings.PlayerESP.DistanceOn
 end)
 
+local Toggle2 = Section2:CreateToggle("Tool", ESPSettings.PlayerESP.ToolOn, function(V)
+    ESPSettings.PlayerESP.ToolOn = V
+    ESPFramework.Tool = ESPSettings.PlayerESP.ToolOn
+end)
+-->> End esp
+
+-->> Ui settings
+local Toggle3 = Section3:CreateToggle("UI Toggle", nil, function(State)
+	Window:Toggle(State)
+end)
+Toggle3:CreateKeybind(tostring(Config.Keybind):gsub("Enum.KeyCode.", ""), function(Key)
+	Config.Keybind = Enum.KeyCode[Key]
+end)
+Toggle3:SetState(true)
+
+local Colorpicker3 = Section3:CreateColorpicker("UI Color", function(Color)
+	Window:ChangeColor(Color)
+end)
+Colorpicker3:UpdateColor(Config.Color)
+
+-- credits to jan for patterns
+local Dropdown3 = Section4:CreateDropdown("Image", {"Default","Hearts","Abstract","Hexagon","Circles","Lace With Flowers","Floral"}, function(Name)
+	if Name == "Default" then
+		Window:SetBackground("2151741365")
+	elseif Name == "Hearts" then
+		Window:SetBackground("6073763717")
+	elseif Name == "Abstract" then
+		Window:SetBackground("6073743871")
+	elseif Name == "Hexagon" then
+		Window:SetBackground("6073628839")
+	elseif Name == "Circles" then
+		Window:SetBackground("6071579801")
+	elseif Name == "Lace With Flowers" then
+		Window:SetBackground("6071575925")
+	elseif Name == "Floral" then
+		Window:SetBackground("5553946656")
+	end
+end)
+Dropdown3:SetOption("Default")
+
+local Colorpicker4 = Section4:CreateColorpicker("Color", function(Color)
+	Window:SetBackgroundColor(Color)
+end)
+Colorpicker4:UpdateColor(Color3.new(1,1,1))
+
+local Slider3 = Section4:CreateSlider("Transparency",0,1,nil,false, function(Value)
+	Window:SetBackgroundTransparency(Value)
+end)
+Slider3:SetValue(0)
+
+local Slider4 = Section4:CreateSlider("Tile Scale",0,1,nil,false, function(Value)
+	Window:SetTileScale(Value)
+end)
+Slider4:SetValue(0.5)
+-->> end ui settings
 
 
--->> End visuals
+-->> Player
+local SilentAimLabel = Section6:CreateLabel("Local Player")
+local Slider1 = Section6:CreateSlider("Walk Speed", 0,37,16,true, function(v)
+	_G.WalkSpeed = v
+end)
+
+local Toggle111 = Section6:CreateToggle("Toggle WS", nil, function(State)
+    if State == true then
+        getgenv().WalkSpeedValue = _G.WalkSpeed; --set your desired walkspeed here
+        local Player = game:service'Players'.LocalPlayer;
+        Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
+        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+        end)
+        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+        end 
+        if State == false then
+        getgenv().WalkSpeedValue = 16; --set your desired walkspeed here
+        local Player = game:service'Players'.LocalPlayer;
+        Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
+        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+        end)
+        Player.Character.Humanoid.WalkSpeed = getgenv().WalkSpeedValue;
+    end
+    end)
+
+    Toggle111:CreateKeybind("5", function(Key)
+        print(Key)
+    end)
+
+-------------
+local Toggle2 = Section6:CreateToggle("Toggle JP", nil, function(State)
+    if State == true then
+        getgenv().JumpPowerValue = _G.JumpPower; --set your desired walkspeed here
+        local Player = game:service'Players'.LocalPlayer;
+        Player.Character.Humanoid:GetPropertyChangedSignal'WalkSpeed':Connect(function()
+        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
+        end)
+        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
+        end 
+        if State == false then
+        getgenv().JumpPowerValue = 50; --set your desired walkspeed here
+        local Player = game:service'Players'.LocalPlayer;
+        Player.Character.Humanoid:GetPropertyChangedSignal'JumpPower':Connect(function()
+        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
+        end)
+        Player.Character.Humanoid.JumpPower = getgenv().JumpPowerValue;
+    end
+    end)
 
 
 
+local Slider1 = Section6:CreateSlider("Jump Power", 0,75,50,true, function(v)
+	_G.JumpPower = v
+end)
+
+
+
+
+
+local Toggle4 = Section6:CreateToggle("Infinite Stamina", nil, function(v) 
+
+    local StaminaTake = getrenv()._G.S_Take
+    local StaminaFunc = getupvalue(StaminaTake, 2)
+    
+    for i,v in pairs(getupvalues(StaminaFunc)) do
+        if type(v) == "function" and getinfo(v).name == "Upt_S" then
+            local oldFunc; 
+            oldFunc = hookfunction(v, function(...)
+                getupvalue(StaminaFunc, 6).S = 100
+                return oldFunc(...)
+            end)
+        end
+    end
+end)
+
+local FovToggle = Section6:CreateToggle("Infinite Jump", nil, function(State)
+    if State == true then
+        local Player = game:GetService'Players'.LocalPlayer;
+    local UIS = game:GetService'UserInputService';
+     
+    _G.JumpHeight = 50;
+     
+    function Action(Object, Function) if Object ~= nil then Function(Object); end end
+     
+    UIS.InputBegan:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+            Action(Player.Character.Humanoid, function(self)
+                if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                    Action(self.Parent.HumanoidRootPart, function(self)
+                        self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                    end)
+                end
+            end)
+        end
+    end)
+    end
+      if State == false then
+        local Player = game:GetService'Players'.LocalPlayer;
+    local UIS = game:GetService'UserInputService';
+     
+    _G.JumpHeight = 0;
+     
+    function Action(Object, Function) if Object ~= nil then Function(Object); end end
+     
+    UIS.InputBegan:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+            Action(Player.Character.Humanoid, function(self)
+                if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                    Action(self.Parent.HumanoidRootPart, function(self)
+                        self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                    end)
+                end
+            end)
+        end
+    end)
+    end
+    end)
+
+local SilentAimLabel = Section6:CreateLabel("Anti(s)")
+
+local Toggle1 = Section6:CreateToggle("Anti fall damage", nil, function(State)
+    _G.NoFallDamage = State
+    local OldNameCall = nil
+    OldNameCall = hookmetamethod(game, "__namecall", function(Self, ...)
+        if not checkcaller() and getnamecallmethod() == "FireServer" and Self.Name == "__DFfDD" and _G.NoFallDamage then
+            return
+        end
+        return OldNameCall(Self, ...)
+    end)
+    end)
+    Toggle1:CreateKeybind("J", function(Key)
+        print(Key)
+    end)
+
+    local Toggle1 = Section6:CreateToggle("Anti Wire Damage", nil, function(State)
+        _G.NoBarbRagdollFallDamage = State
+            local OldNameCall = nil
+            OldNameCall = hookmetamethod(game, "__namecall", function(Self, ...)
+                if not checkcaller() and getnamecallmethod() == "FireServer" and Self.Name == "BHHh" and _G.NoBarbRagdollFallDamage then
+                    return
+                end
+                return OldNameCall(Self, ...)
+            end)
+        end)
+
+        local Toggle1 = Section6:CreateToggle("Anti Ragdoll", Settings.NoRagdoll, function(V)
+			Settings.NoRagdoll = V
+		end)
+
+        local Toggle1 = Section6:CreateToggle("Anti Stomp", false, function(V)
+			_G.AntiStomp = V
+			local Downed = game:GetService("ReplicatedStorage").CharStats[game:GetService("Players").LocalPlayer.Name].Downed
+			Downed.Changed:Connect(function()
+				if Downed.Value == true and _G.AntiStomp == true then
+					for i, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+						if v:IsA("BasePart") then
+							v:Destroy()
+						end
+					end
+				end
+			end)
+		end)
+
+
+        local Toggle6 = Section6:CreateToggle("Anti Flash", nil, function(v)
+            _G.NoFlashBang = v
+            game.Workspace.Camera.ChildAdded:Connect(function(Item)
+                if _G.NoFlashBang == true then
+                    if Item.Name == "BlindEffect" then
+                        Item.Enabled = false
+                    end
+                end
+            end)
+        
+            game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(Item)
+                if Item.Name == "FlashedGUI" then
+                    if _G.NoFlashBang == true then
+                        Item.Enabled = false
+                    end
+                end
+            end)
+        end)
+        
+        local Toggle6 = Section6:CreateToggle("Anti Smoke", nil, function(v)
+            _G.NoSmoke = v
+        game.Workspace.Debris.ChildAdded:Connect(function(Item)
+            if Item.Name == "SmokeExplosion" then
+                if _G.NoSmoke == true then
+                    wait(0.1)
+                    Item.Particle1:Destroy()
+                    Item.Particle2:Destroy()
+                end
+            end
+        end)
+        
+        game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(Item)
+            if Item.Name == "SmokeScreenGUI" then
+                if _G.NoSmoke == true then
+                    Item.Enabled = false
+                end
+            end
+        end)
+        end)
+
+
+
+        local SilentAimLabel = Section6:CreateLabel("Noclips")
+        local Toggle6 = Section6:CreateToggle("Noclip", nil, function(v) 
+            _G.Noclip = v
+            
+            local function Noclip()
+            if game.Players.LocalPlayer.Character ~= nil and _G.Noclip == true then
+            for _, selfChar in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if selfChar:IsA("BasePart") and selfChar.CanCollide == true and selfChar.Name then
+                        selfChar.CanCollide = false
+                    end
+                end
+            end
+            end
+            
+            game:GetService('RunService').Stepped:Connect(Noclip)
+            end)
+
+            local Toggle1 = Section6:CreateToggle("Noclip Doors", nil, function(State)
+                _G.Noclipdoor = State
+        
+                if  _G.Noclipdoor == true then
+                    for _, v in pairs(game:GetService("Workspace").Map.Doors:GetChildren()) do
+                        if v:FindFirstChild("DoorBase") then
+                            v.DoorBase.CanCollide = false
+                        end
+                        if v:FindFirstChild("DoorA") then
+                            v.DoorA.CanCollide = false
+                        end
+                        if v:FindFirstChild("DoorB") then
+                            v.DoorB.CanCollide = false
+                        end
+                        if v:FindFirstChild("DoorC") then
+                            v.DoorC.CanCollide = false
+                        end
+                        if v:FindFirstChild("DoorD") then
+                            v.DoorD.CanCollide = false
+                        end
+                    end
+                else
+                    for _, v in pairs(game:GetService("Workspace").Map.Doors:GetChildren()) do
+                        if v:FindFirstChild("DoorBase") then
+                            v.DoorBase.CanCollide = true
+                        end
+                        if v:FindFirstChild("DoorA") then
+                            v.DoorA.CanCollide = true
+                        end
+                        if v:FindFirstChild("DoorB") then
+                            v.DoorB.CanCollide = true
+                        end
+                        if v:FindFirstChild("DoorC") then
+                            v.DoorC.CanCollide = true
+                        end
+                        if v:FindFirstChild("DoorD") then
+                            v.DoorD.CanCollide = true
+                        end
+                    end
+                end
+            end)
+    Toggle6:CreateKeybind("Y", function(Key)
+        print(Key)
+    end)
+
+    local SilentAimLabel = Section6:CreateLabel("Unlocks")
+    local Toggle6 = Section6:CreateToggle("Unlock Nearby Doors", Settings.UnlockDoorsNearby, function(V)
+        Settings.UnlockDoorsNearby = V
+    end)
+
+    local Toggle6 = Section6:CreateToggle("Open Nearby Doors", Settings.OpenDoorsNearby, function(V)
+        Settings.OpenDoorsNearby = V
+    end)
+
+-->> end player
+
+-->> Misc tab
+
+local Button1 = Section7:CreateButton("⚠️Troll", function()	
+    game.Players.LocalPlayer.Character["Left Arm"]:Destroy()
+    game.Players.LocalPlayer.Character["Right Leg"]:Destroy()
+    game.Players.LocalPlayer.Character["Left Leg"]:Destroy()
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = 10
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("SpecialMesh") or v.Name == "SpecialMesh" then
+            v:Destroy()
+        end
+    end
+    end)
 
 
 local Slider1 = Section7:CreateSlider("Camera Max Zoom", 120,1000,nil,false, function(v)
@@ -543,3 +1180,909 @@ for i, v in pairs(workspace:GetDescendants()) do
 end
 end)
 
+
+local Toggle6 = Section7:CreateToggle("Chat Enabler", nil, function(v)
+    if v == true then
+        local ChatFrame = game.Players.LocalPlayer.PlayerGui.Chat.Frame
+        ChatFrame.ChatChannelParentFrame.Visible = true
+        ChatFrame.ChatBarParentFrame.Position = ChatFrame.ChatChannelParentFrame.Position + UDim2.new(UDim.new(), ChatFrame.ChatChannelParentFrame.Size.Y)
+    elseif v == false then
+        local ChatFrame = game.Players.LocalPlayer.PlayerGui.Chat.Frame
+        ChatFrame.ChatChannelParentFrame.Visible = false
+        ChatFrame.ChatBarParentFrame.Position = ChatFrame.ChatChannelParentFrame.Position + UDim2.new(0, 0, 0, 0)
+    end
+end)
+
+
+
+
+
+
+local Label1 = Section7:CreateLabel("Auto(s)")
+local Toggle5 = Section7:CreateToggle("Auto Lockpick", nil, function(a)
+    if a then
+        _G.LOCKPICKHBE = true
+        LOCKHBE()
+    else
+        _G.LOCKPICKHBE = false
+    end
+end)
+
+function LOCKHBE()
+task.spawn(function()
+
+for i,v in next, game.Players.LocalPlayer.PlayerGui:GetChildren() do
+    if v.Name == "LockpickGUI" then
+    for k,z in next, v:GetDescendants() do
+        if z.Name == "Bar" then
+            z.Size = UDim2.new(0, 35, 0, 500)
+        end
+    end
+end
+end
+
+repeat
+        game.Players.LocalPlayer.PlayerGui.ChildAdded:Connect(function(v)
+            if _G.LOCKPICKHBE and v.Name == "LockpickGUI" then
+                for i,z in next, v:GetDescendants() do
+                    if z.Name == "Bar" then
+                        z.Size = UDim2.new(0, 35, 0, 500)
+                    end
+                end
+
+            end
+        end)
+game:GetService("RunService").RenderStepped:Wait()
+until not _G.LOCKPICKHBE
+wait(0.04)
+for i,v in next, game.Players.LocalPlayer.PlayerGui:GetChildren() do
+    if v.Name == "LockpickGUI" then
+    for k,z in next, v:GetDescendants() do
+        if z.Name == "Bar" then
+            z.Size = UDim2.new(0, 35, 0, 30)
+                        end
+                    end
+                end
+            end
+    end)
+end
+
+
+local Toggle1 = Section7:CreateToggle("Auto Pickup all", nil, function(State)
+    getgenv().Instant = State
+
+while Instant do wait(0.5)
+    for _,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        if v:IsA("ProximityPrompt") and game:GetService("Players").LocalPlayer:DistanceFromCharacter(v.Parent.Position) <= 30 then
+          fireproximityprompt(v,0)
+          wait(0.1)
+          fireproximityprompt(v,1)
+        end
+    end
+end
+end)
+
+local Toggle1 = Section7:CreateToggle("Auto pickup Tools", Settings.AutoPickTools, function(V)
+    Settings.AutoPickTools = V
+end)
+
+local Toggle1 = Section7:CreateToggle("Auto pickup Cash", Settings.AutoPickCash, function(V)
+    Settings.AutoPickCash = V
+end)
+
+
+local Toggle1 = Section7:CreateToggle("Auto pickup Scrap", Settings.AutoPickScrap, function(V)
+    Settings.AutoPickScrap = V
+end)
+-->> End misc tab
+
+
+-->> Teleports
+local SilentAimLabel = Section5:CreateLabel("Teleports")
+local SilentAimLabel = Section5:CreateLabel("Teleport every 10 seconds.")
+local Button2 = Section5:CreateButton("Edge of map", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)          -4668, 6, -257
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+
+end
+
+TeleportTO(Vector3.new(-3798, 4, -170))
+end)
+
+local Button2 = Section5:CreateButton("Cafe", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)          
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+
+end
+
+TeleportTO(Vector3.new(-4668, 6, -257))
+end)
+
+local Button2 = Section5:CreateButton("Vibe Check", function()      
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4754.68848, -200.966553, -972.997437))
+end)
+
+
+local Button2 = Section5:CreateButton("Vibe Button", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4776.8501, -36.7657585, -808.682007, 0, 0, 1, 0, 1, -0, -1, 0, 0))
+end)
+
+
+local Button2 = Section5:CreateButton("Tower", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4458.69434, 120.390343, -890.67627, 0, 0, 1, 0, 1, -0, -1, 0, 0))
+end)
+
+
+
+local Button2 = Section5:CreateButton("Atm", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4463.01514, 0.90637207, -453.874664, -1.1920929e-07, 0, 1.00000012, 0, 1, 0, -1.00000012, 0, -1.1920929e-07))
+end)
+
+
+local Button2 = Section5:CreateButton("Dealer", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4815.71484, 9.84649944, -711.355225, 0.707134247, -0.707079291, 0, -0.707079291, -0.707134247, -0, 0, 0, -1))
+end)
+
+
+local Button2 = Section5:CreateButton("Armory 1", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4769.7275390625, 3.8944435119628906, -360.00042724609375))
+end)
+
+local Button2 = Section5:CreateButton("Armory 2", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4143.83154296875, 3.899510383605957, -183.46885681152344))
+end)
+
+
+local Button2 = Section5:CreateButton("Gas Station", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4429.2177734375, 4.096165657043457, 163.4987335205078))
+end)
+
+local Button2 = Section5:CreateButton("Subway", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4600.34619140625, 3.899278163909912, -694.621826171875))
+end)
+
+local Button2 = Section5:CreateButton("Motel", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4641.009765625, 3.690157413482666, -905.4984741210938))
+end)
+
+
+local Button2 = Section5:CreateButton("Fix airstuck", function()           
+local Sex = {
+[1] = "__--r",
+[2] = game.Players.LocalPlayer.Character.HumanoidRootPart.Position,
+[3] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0,0,0)
+}
+game:GetService("ReplicatedStorage").Events.__DFfDD:FireServer(unpack(Sex))
+end)
+
+local SilentAimLabel = Section8:CreateLabel("Robbing Tps")
+
+local Button2 = Section8:CreateButton("Hella scraps", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-3963, 4, -506))
+end)
+
+local Button2 = Section8:CreateButton("Safe", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4396, 6, -561))
+end)
+
+
+local Button2 = Section8:CreateButton("Safe 2", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4426, 6, -546))
+end)
+
+local Button2 = Section8:CreateButton("Safe 3", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4418, 22, -615))
+end)
+
+local Button2 = Section8:CreateButton("Safe 4", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4270, 7, -656))
+end)
+
+local Button2 = Section8:CreateButton("Safe 5", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4485, 20, -855))
+end)
+
+local Button2 = Section8:CreateButton("Safe 6", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4469, 46, -786))
+end)
+
+local Button2 = Section8:CreateButton("Safe 7", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4486, 58, -884))
+end)
+
+local Button2 = Section8:CreateButton("Safe 8", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4470, 84, -824))
+end)
+
+local Button2 = Section8:CreateButton("Tower safe 1", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4513, 103, -812))
+end)
+
+local Button2 = Section8:CreateButton("Tower safe 2", function()       
+    local LocalPlayer = game.Players.LocalPlayer
+
+local function Ragdoll()
+getrenv()._G.RagdollChar(1.5)
+end
+
+local function TeleportTO(Position)
+
+local SelfCharacter = LocalPlayer.Character
+local SelfRootPart, SelfHumanoid = SelfCharacter and SelfCharacter:FindFirstChild("HumanoidRootPart"), SelfCharacter and SelfCharacter:FindFirstChildOfClass("Humanoid")
+if not SelfCharacter or not SelfRootPart or not SelfHumanoid then return end
+
+if not Position then
+return
+end
+
+SelfRootPart.Position = Vector3.new(0, -1e9, 0)
+wait(1)
+SelfHumanoid:UnequipTools()
+SelfRootPart.Position = Position
+wait(1.4)
+for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+if v:IsA("Tool") then
+    Ragdoll()
+    wait(1.5)
+    SelfHumanoid:EquipTool(v)
+    break
+end
+end
+end
+TeleportTO(Vector3.new(-4513, 103, -855))
+end)
+-->> End Teleports
